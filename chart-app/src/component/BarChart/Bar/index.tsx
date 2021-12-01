@@ -19,7 +19,9 @@ interface AssetsBarsProps extends AssetsBarProps {
 // Barの要素を返す子コンポーネント（このAssetsBar）を親コンポーネント（App.tsx）で呼び出すと描画されない
 export const AssetsBar: React.FC= () => {
   // const { dataKey,stackId, fillColor} = props;
-  return <Bar dataKey='A' stackId='test' fill='#6a1ce8' />;
+  return <>
+    <Bar dataKey='A' stackId='test' fill='#6a1ce8' />
+  </>;
   };
 
 
