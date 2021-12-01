@@ -5,7 +5,6 @@ import './App.css';
 import { AssetsBarChart } from 'component/BarChart';
 import { AssetsBarPropsData, AssetsTransitionData } from 'SampleData/State';
 import { RenderLineChart } from 'component/LineChart';
-import { AssetsBar } from 'component/BarChart/Bar';
 
 // Barの描画
 // RenderLineChart の描画は成功。
@@ -14,7 +13,7 @@ const App: React.FC = () => {
   return (
     <div className='App'>
       <RenderLineChart />
-      <BarChart
+      {/* <BarChart
         width={600}
         height={300}
         data={AssetsTransitionData.AssetsDataList}
@@ -31,7 +30,7 @@ const App: React.FC = () => {
         <Bar dataKey='C' stackId='test' />
         <Bar dataKey='D' stackId='test' />
         <Bar dataKey='E' stackId='test' />
-      </BarChart>
+      </BarChart> */}
 
       <AssetsBarChart
         barStackId={'oneYears'}
@@ -40,7 +39,7 @@ const App: React.FC = () => {
         chartsData={AssetsTransitionData.AssetsDataList}
         xAxisdataKey={'year'}
         labelPosition={'center'}
-        // labelColor={'#e4f2f7'}
+        labelColor={'#e4f2f7'}
         assetsBarPropsList={AssetsBarPropsData}
       />
     </div>

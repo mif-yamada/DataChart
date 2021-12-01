@@ -1,4 +1,4 @@
-import { AssetsBarProps } from 'component/BarChart/Bar';
+import { AssetsBarProps } from 'component/BarChart';
 import { AssetsTransitionProps } from 'schema';
 
 export const AssetsTransitionData: AssetsTransitionProps = {

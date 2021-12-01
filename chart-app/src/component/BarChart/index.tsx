@@ -1,10 +1,48 @@
 import React from 'react';
 import shortid from 'shortid';
-import { BarChart, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import styled from '@emotion/styled';
+import {
+  LabelList,
+  Bar,
+  BarChart,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from 'recharts';
 
 import { AssetsDataProps, DataKeyTypes } from 'schema';
-import { AssetsBar, AssetsBarProps } from 'component/BarChart/Bar';
 
+// Bar単体について---------------------------
+export interface AssetsBarProps {
+  dataKey: string;
+  stackId?: string;
+  fillColor: string;
+}
+
+interface AssetsBarsProps extends AssetsBarProps {
+  stackId: string;
+  labelPosition: 'top' | 'center';
+  labelColor: string;
+  onClick?: () => void;
+}
+
+const LabelStyled = styled(LabelList)`
+  color: white;
+`;
+
+const AssetsBar: React.FC<AssetsBarsProps> = (
+  props: AssetsBarsProps
+) => {
+  const { dataKey, fillColor, stackId, labelPosition, onClick } = props;
+  return (
+    <Bar dataKey={dataKey} stackId={stackId} fill={fillColor} onClick={onClick}>
+      <LabelStyled dataKey={dataKey} position={labelPosition} />
+    </Bar>
+  );
+};
+
+// 棒グラフ----------------------------
 interface BarChartProps {
   barStackId: string;
   width: number;
@@ -12,11 +50,10 @@ interface BarChartProps {
   chartsData: AssetsDataProps[];
   xAxisdataKey: DataKeyTypes;
   labelPosition: 'top' | 'center';
-  // labelColor: string;
+  labelColor: string;
   assetsBarPropsList: AssetsBarProps[];
 }
 
-// グラフ
 // yearが'2021年度'だけを描画すれば単一棒グラフの描画も可能？
 export const AssetsBarChart: React.FC<BarChartProps> = (
   props: BarChartProps
@@ -28,7 +65,7 @@ export const AssetsBarChart: React.FC<BarChartProps> = (
     chartsData,
     xAxisdataKey,
     labelPosition,
-    // labelColor,
+    labelColor,
     assetsBarPropsList,
   } = props;
   return (
@@ -37,7 +74,20 @@ export const AssetsBarChart: React.FC<BarChartProps> = (
       <XAxis dataKey={xAxisdataKey} />
       <YAxis type='number' />
       <Tooltip />
-      {/* {assetsBarPropsList.map((assetsBarProps) => (
+      {/* Bar一つ一つ記述すると描画される */}
+      {/* <Bar>って名前のタグでないと描画反応しないのでは、と推測します。 */}
+      <Bar
+        dataKey={assetsBarPropsList[0].dataKey}
+        stackId={barStackId}
+        fill={assetsBarPropsList[0].fillColor}
+      >
+        <LabelStyled
+          dataKey={assetsBarPropsList[0].dataKey}
+          position={labelPosition}
+        />
+      </Bar>
+
+      {assetsBarPropsList.map((assetsBarProps) => (
         <AssetsBar
           key={shortid.generate()}
           dataKey={assetsBarProps.dataKey}
@@ -46,7 +96,7 @@ export const AssetsBarChart: React.FC<BarChartProps> = (
           labelPosition={labelPosition}
           labelColor={labelColor}
         />
-      ))} */}
+      ))}
     </BarChart>
   );
 };
