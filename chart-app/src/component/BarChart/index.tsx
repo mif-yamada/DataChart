@@ -1,6 +1,4 @@
 import React from 'react';
-import shortid from 'shortid';
-import styled from '@emotion/styled';
 import {
   LabelList,
   Bar,
@@ -27,17 +25,13 @@ interface AssetsBarsProps extends AssetsBarProps {
   onClick?: () => void;
 }
 
-const LabelStyled = styled(LabelList)`
-  color: white;
-`;
-
 const AssetsBar: React.FC<AssetsBarsProps> = (
   props: AssetsBarsProps
 ) => {
   const { dataKey, fillColor, stackId, labelPosition, onClick } = props;
   return (
     <Bar dataKey={dataKey} stackId={stackId} fill={fillColor} onClick={onClick}>
-      <LabelStyled dataKey={dataKey} position={labelPosition} />
+      <LabelList dataKey={dataKey} position={labelPosition} />
     </Bar>
   );
 };
@@ -74,20 +68,8 @@ export const AssetsBarChart: React.FC<BarChartProps> = (
       <XAxis dataKey={xAxisdataKey} />
       <YAxis type='number' />
       <Tooltip />
-      {/* Bar一つ一つ記述すると描画される */}
-      {/* <Bar>って名前のタグでないと描画反応しないのでは、と推測します。 */}
-      <Bar
-        dataKey={assetsBarPropsList[0].dataKey}
-        stackId={barStackId}
-        fill={assetsBarPropsList[0].fillColor}
-      >
-        <LabelStyled
-          dataKey={assetsBarPropsList[0].dataKey}
-          position={labelPosition}
-        />
-      </Bar>
-
-      {assetsBarPropsList.map((assetsBarProps) => (
+      {/* <Bar>の子コンポーネントを呼び出すと描画なし */}
+      {/* {assetsBarPropsList.map((assetsBarProps) => (
         <AssetsBar
           key={shortid.generate()}
           dataKey={assetsBarProps.dataKey}
@@ -96,7 +78,61 @@ export const AssetsBarChart: React.FC<BarChartProps> = (
           labelPosition={labelPosition}
           labelColor={labelColor}
         />
-      ))}
+      ))} */}
+
+      {/* Bar一つ一つ記述すると描画される */}
+      {/* <BarChart>内に<Bar>って名前のタグでないと描画反応しないのでは、と推測します。 */}
+      {/* Rechartsでは子コンポーネントのタグ名は、変更せず使わないと反応しないものと推測します。 */}
+      <Bar
+        dataKey={assetsBarPropsList[0].dataKey}
+        stackId={barStackId}
+        fill={assetsBarPropsList[0].fillColor}
+      >
+        <LabelList
+          dataKey={assetsBarPropsList[0].dataKey}
+          position={labelPosition}
+        />
+      </Bar>
+      <Bar
+        dataKey={assetsBarPropsList[1].dataKey}
+        stackId={barStackId}
+        fill={assetsBarPropsList[1].fillColor}
+      >
+        <LabelList
+          dataKey={assetsBarPropsList[1].dataKey}
+          position={labelPosition}
+        />
+      </Bar>
+      <Bar
+        dataKey={assetsBarPropsList[2].dataKey}
+        stackId={barStackId}
+        fill={assetsBarPropsList[2].fillColor}
+      >
+        <LabelList
+          dataKey={assetsBarPropsList[2].dataKey}
+          position={labelPosition}
+        />
+      </Bar>
+      <Bar
+        dataKey={assetsBarPropsList[3].dataKey}
+        stackId={barStackId}
+        fill={assetsBarPropsList[3].fillColor}
+      >
+        <LabelList
+          dataKey={assetsBarPropsList[3].dataKey}
+          position={labelPosition}
+        />
+      </Bar>
+      <Bar
+        dataKey={assetsBarPropsList[4].dataKey}
+        stackId={barStackId}
+        fill={assetsBarPropsList[4].fillColor}
+      >
+        <LabelList
+          dataKey={assetsBarPropsList[4].dataKey}
+          position={labelPosition}
+        />
+      </Bar>
     </BarChart>
   );
 };
